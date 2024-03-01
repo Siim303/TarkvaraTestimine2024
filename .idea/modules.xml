@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/HW1/GeneticAlgorithmStudent/GeneticAlgorithmStudent.iml" filepath="$PROJECT_DIR$/HW1/GeneticAlgorithmStudent/GeneticAlgorithmStudent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HW1/HeapsortStudent/HeapsortStudent.iml" filepath="$PROJECT_DIR$/HW1/HeapsortStudent/HeapsortStudent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/TarkvaraTestimine24.iml" filepath="$PROJECT_DIR$/.idea/TarkvaraTestimine24.iml" />
+    </modules>
+  </component>
+</project>
