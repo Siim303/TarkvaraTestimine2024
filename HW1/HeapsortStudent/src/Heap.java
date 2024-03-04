@@ -3,6 +3,7 @@ import java.util.List;
 
 /**
  * Maximum binary heap for positive integers
+ *
  * @author Hiie-Helen Raju
  */
 public class Heap {
@@ -34,8 +35,8 @@ public class Heap {
      * @return desired index of value of desired element
      */
     private int leftChildIndex(int index) {
-        if (valueList.size() > (2 * index) - 1) {
-            return (2 * (index) - 1);
+        if (valueList.size() > (2 * index) + 1) { // changed from (2 * index) - 1 to (2 * index) + 1
+            return (2 * (index) + 1); // same here
         } else return -1;
     }
 
@@ -65,12 +66,13 @@ public class Heap {
 
     private int elemParentIndex(int index) {
         if (index > 0) {
-            return (index-1) / 2; // changed from index/2 to (index-1)/2
+            return (index - 1) / 2; // changed from index/2 to (index-1)/2
         } else return -1;
     }
 
     /**
      * Moves smaller elements down in the heap valueList tree, does nothing to other elements
+     *
      * @param index of the current element
      */
     private void BubbleDown(int index) {
@@ -81,7 +83,7 @@ public class Heap {
             int leftChildIndex = leftChildIndex(index);
             int rightChildIndex = rightChildIndex(index);
 
-            if (currentElem < leftChild) {
+            /*if (currentElem < leftChild) {
                 if (leftChild > rightChild) {
                     valueList.set(index, leftChild); //rightchild to leftchild
                     valueList.set(leftChildIndex, currentElem);
@@ -96,6 +98,15 @@ public class Heap {
                     valueList.set(rightChildIndex, currentElem);
                     BubbleDown(rightChildIndex);
                 }
+            }*/
+            if (leftChild > currentElem && leftChild > rightChild) {
+                valueList.set(index, leftChild);
+                valueList.set(leftChildIndex, currentElem);
+                BubbleDown(leftChildIndex);
+            } else if (rightChild > currentElem && rightChild > leftChild) {
+                valueList.set(index, rightChild);
+                valueList.set(rightChildIndex, currentElem);
+                BubbleDown(rightChildIndex);
             }
         } else {
             return;
@@ -104,6 +115,7 @@ public class Heap {
 
     /**
      * Moves larger elements up in heap valueList tree, does nothing to other elements
+     *
      * @param index of current element
      */
     private void BubbleUp(int index) {
@@ -112,7 +124,7 @@ public class Heap {
             int parent = elemParent(index);
             int parentIndex = elemParentIndex(index);
             if (currentElem > parent) {
-                valueList.set(parent, index);
+                valueList.set(index, parent); // index and parent are mixed up
                 valueList.set(parentIndex, currentElem);
                 BubbleUp(parentIndex);
             }
@@ -121,6 +133,7 @@ public class Heap {
 
     /**
      * Adds elements to heap valueList and moves them to correct location
+     *
      * @param elem element to be added to the heap valueList
      */
     public void addElem(int elem) {
@@ -130,6 +143,7 @@ public class Heap {
 
     /**
      * Removes and element from valueList and rearrange the rest of it to match valueList tree structure
+     *
      * @param elem value of the element to be removed.
      */
     public void removeElem(int elem) {
@@ -143,12 +157,28 @@ public class Heap {
         } else {
             valueList.remove(valueList.size() - 1);
             valueList.set(indexOfRemoveElem, lastElem);
-            int parentOfRemoved = elemParent(indexOfRemoveElem);
+
+            /*int parentOfRemoved = elemParent(indexOfRemoveElem);
 
             if (lastElem < parentOfRemoved) {
                 BubbleUp(indexOfRemoveElem);
             } else if (lastElem > parentOfRemoved) {
                 BubbleDown(indexOfRemoveElem);
+            }*/
+
+            int leftChild = leftChildElem(indexOfRemoveElem);
+            int rightChild = rightChildElem(indexOfRemoveElem);
+
+            if (leftChild > lastElem && leftChild > rightChild) {
+                valueList.set(indexOfRemoveElem, leftChild);
+                valueList.set(leftChildIndex(indexOfRemoveElem), lastElem);
+                BubbleDown(leftChildIndex(indexOfRemoveElem));
+            } else if (rightChild > lastElem && rightChild > leftChild) {
+                valueList.set(indexOfRemoveElem, rightChild);
+                valueList.set(rightChildIndex(indexOfRemoveElem), lastElem);
+                BubbleDown(rightChildIndex(indexOfRemoveElem));
+            } else {
+                BubbleUp(indexOfRemoveElem);
             }
         }
     }
@@ -159,7 +189,8 @@ public class Heap {
 
     /**
      * Prints the valueList as a sideways tree
-     * @param heap valueList of a heap;
+     *
+     * @param heap  valueList of a heap;
      * @param index index of the current element;
      * @param depth depth of the current runthrough of the recursion
      */
@@ -178,6 +209,7 @@ public class Heap {
 
     /**
      * Removes the largest (root) element of the heap valueList
+     *
      * @return largest element of the heap value list
      */
     public int removeLargest() {
